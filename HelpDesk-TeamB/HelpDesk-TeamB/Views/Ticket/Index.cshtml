@@ -1,0 +1,16 @@
+@model List<Ticket>
+@{ ViewData["Title"] = "Müraciətlər"; }
+<div class="d-flex justify-content-between mb-3"><h2>Müraciətlər</h2><a class="btn btn-primary" asp-action="Create">+ Yeni</a></div>
+<form method="get" class="row g-2 mb-3">
+  <div class="col-md-3"><select name="category" class="form-select" asp-items="Html.GetEnumSelectList<Category>()"><option value="">Bütün kateqoriyalar</option></select></div>
+  <div class="col-md-3"><select name="status" class="form-select" asp-items="Html.GetEnumSelectList<TicketStatus>()"><option value="">Bütün statuslar</option></select></div>
+  <div class="col-md-3"><button class="btn btn-secondary">Filtrlə</button> <a class="btn btn-link" asp-action="Index">Təmizlə</a></div>
+</form>
+@if (!Model.Any()) { <div class="alert alert-info">Müraciət tapılmadı.</div> } else {
+<div class="table-responsive"><table class="table table-hover align-middle">
+<thead><tr><th>#</th><th>Başlıq</th><th>Kateqoriya</th><th>Prioritet</th><th>Status</th><th>Müəllif</th><th>Tarix</th></tr></thead>
+<tbody>@foreach (var t in Model) {
+<tr><td>@t.Id</td><td><a asp-action="Details" asp-route-id="@t.Id">@t.Title</a></td><td>@t.Category</td><td>@t.Priority</td>
+<td><span class="badge status-@t.Status">@t.Status</span></td><td>@t.CreatedBy?.FullName</td><td>@t.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td></tr>}
+</tbody></table></div>}
+@section Scripts { <script>document.addEventListener('DOMContentLoaded',function(){var q=new URLSearchParams(location.search);['category','status'].forEach(function(n){var e=document.querySelector('[name='+n+']');if(e&&q.get(n))e.value=q.get(n);});});</script> }

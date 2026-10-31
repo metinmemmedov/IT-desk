@@ -1,0 +1,9 @@
+@model HelpDesk.Controllers.LoginVm
+@{ ViewData["Title"] = "Giriş"; }
+<h2>Giriş</h2>
+<form asp-action="Login" asp-route-returnUrl="@ViewBag.ReturnUrl" method="post" class="col-md-5">
+  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+  <div class="mb-3"><label asp-for="Email" class="form-label">Email</label><input asp-for="Email" class="form-control" /><span asp-validation-for="Email" class="text-danger"></span></div>
+  <div class="mb-3"><label asp-for="Password" class="form-label">Parol</label><input asp-for="Password" class="form-control" /><span asp-validation-for="Password" class="text-danger"></span></div>
+  <button class="btn btn-primary">Daxil ol</button>
+</form>

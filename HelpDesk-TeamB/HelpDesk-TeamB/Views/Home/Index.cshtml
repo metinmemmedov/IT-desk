@@ -1,0 +1,13 @@
+@model Dictionary<TicketStatus,int>
+@{ ViewData["Title"] = "Ana səhifə"; }
+<div class="p-4 mb-4 bg-light rounded"><h1>Universitet IT Texniki Dəstək</h1>
+<p class="lead">Texniki problemi qeyd edin, statusunu izləyin.</p>
+<a class="btn btn-primary" asp-controller="Ticket" asp-action="Create">Yeni müraciət yarat</a>
+<a class="btn btn-outline-primary" asp-controller="Ticket" asp-action="Index">Müraciətlərə bax</a></div>
+<h4>Statistika</h4>
+<div class="row g-3">
+  <div class="col-6 col-md"><div class="card stat text-center"><div class="card-body"><div class="display-6">@ViewBag.Total</div>Ümumi</div></div></div>
+  @foreach (var kv in Model) {
+    <div class="col-6 col-md"><div class="card stat text-center"><div class="card-body"><div class="display-6">@kv.Value</div>@kv.Key</div></div></div>
+  }
+</div>

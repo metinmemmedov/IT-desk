@@ -1,0 +1,18 @@
+@model Ticket
+@{ ViewData["Title"] = "Müraciət #" + Model.Id; bool it = User.IsInRole("ITSpecialist") || User.IsInRole("Admin"); }
+<a asp-action="Index">&larr; Siyahıya qayıt</a>
+<div class="card mt-3"><div class="card-body">
+  <h3>@Model.Title <span class="badge status-@Model.Status">@Model.Status</span></h3>
+  <p class="text-muted">#@Model.Id · @Model.Category · Prioritet: @Model.Priority</p>
+  <p style="white-space:pre-wrap">@Model.Description</p><hr />
+  <dl class="row mb-0">
+    <dt class="col-sm-3">Yaradan</dt><dd class="col-sm-9">@Model.CreatedBy?.FullName</dd>
+    <dt class="col-sm-3">Məsul IT</dt><dd class="col-sm-9">@(Model.AssignedTo?.FullName ?? "—")</dd>
+    <dt class="col-sm-3">Yaradılıb</dt><dd class="col-sm-9">@Model.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</dd>
+    <dt class="col-sm-3">Yenilənib</dt><dd class="col-sm-9">@(Model.UpdatedAt?.ToLocalTime().ToString("dd.MM.yyyy HH:mm") ?? "—")</dd>
+  </dl></div></div>
+@if (it) {
+<form asp-action="ChangeStatus" asp-route-id="@Model.Id" method="post" class="row g-2 mt-3 col-md-6">
+  <div class="col"><select name="status" class="form-select" asp-items="Html.GetEnumSelectList<TicketStatus>()"></select></div>
+  <div class="col-auto"><button class="btn btn-success">Statusu dəyiş</button></div>
+</form>}
